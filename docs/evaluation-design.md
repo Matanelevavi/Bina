@@ -28,3 +28,10 @@ and do not put identifiers (`flight_date`, `flight_id`, ranges) into the prompt.
 ## Metrics
 Per-class precision, recall, F1, support and the confusion matrix (`src/bina/metrics.py`). With 50 flights the per-class
 numbers are small-sample estimates, report them with their counts.
+
+## Prompt input (`src/bina/features.py`)
+Each flight is reduced to min/max/mean/std for 7 battery signals. Measured on the 50-flight sample (Athena):
+`scale`, `remaining`, `discharged_mah` exist in 50/50 flights, `temperature` in 47/50, `max_cell_voltage_delta` in 48/50.
+Rows per flight range 52 to 1,029 and duration 25.6 to 515 s, so raw rows are not sent.
+Missing signals are written as `n/a (no data)` (never 0), partial gaps are reported as a count, and `flight_date`,
+`flight_id` and time ranges are excluded. The prompt builder is tested, but **no Bedrock call has been made yet**.

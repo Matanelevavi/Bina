@@ -11,6 +11,18 @@ built as a learning and portfolio project. Three layers:
 | AI | Bedrock (Claude Haiku) classifies the anomaly type on a stratified sample, evaluated against ground truth | Sample and evaluation code ready, classifier not yet run |
 | AI orchestration | An agent monitors pipeline health, a second agent analyzes the first one's mistakes | Planned |
 
+## Architecture
+```mermaid
+flowchart LR
+  A[UAV-SEAD CSVs] --> B[(S3 raw<br/>SSE-KMS, versioned)]
+  B --> C[Glue ETL x4]
+  C --> D[(S3 curated<br/>Parquet by flight_date)]
+  D --> E[Glue Crawler / Data Catalog]
+  E --> F[Athena]
+  F --> G[Bedrock classifier<br/>planned run]
+  G --> H[Evaluation vs ground truth]
+```
+
 ## What is verified
 - 4 Glue jobs SUCCEEDED, 151 / 151 / 151 / 23 partitions by `flight_date`.
 - Athena scans **72,996 bytes on Parquet vs 1,492,495 bytes on CSV** for the same 46 flights (about 20.4x less). One run each, small sample, see [docs/measurements.md](docs/measurements.md).
@@ -25,7 +37,7 @@ built as a learning and portfolio project. Three layers:
 
 ## Repository layout
 ```
-src/bina/      paths (raw key rules), sqlgen (Athena SQL), sampling, metrics
+src/bina/      paths (raw key rules), sqlgen (Athena SQL), sampling, features (per-flight stats and prompt), metrics
 scripts/       make_verification_sql.py
 data/          sample.json, the 50-flight evaluation sample (seed 42)
 docs/          architecture, evaluation design, measurements
