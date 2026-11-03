@@ -1,0 +1,352 @@
+[
+ {
+  "key": "2019-01-04/08_01_09",
+  "flight_date": "2019-01-04",
+  "flight": "08_01_09",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-10-04/07_17_05",
+  "flight_date": "2018-10-04",
+  "flight": "07_17_05",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2019-01-04/09_24_22",
+  "flight_date": "2019-01-04",
+  "flight": "09_24_22",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2019-01-04/09_10_41",
+  "flight_date": "2019-01-04",
+  "flight": "09_10_41",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2019-01-04/09_05_55",
+  "flight_date": "2019-01-04",
+  "flight": "09_05_55",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2019-01-04/08_35_09",
+  "flight_date": "2019-01-04",
+  "flight": "08_35_09",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-12-31/11_05_14",
+  "flight_date": "2018-12-31",
+  "flight": "11_05_14",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-12-28/08_13_51",
+  "flight_date": "2018-12-28",
+  "flight": "08_13_51",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2019-01-07/07_29_12",
+  "flight_date": "2019-01-07",
+  "flight": "07_29_12",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2019-01-04/09_03_36",
+  "flight_date": "2019-01-04",
+  "flight": "09_03_36",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2019-01-30/18_34_02",
+  "flight_date": "2019-01-30",
+  "flight": "18_34_02",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-07-03/18_57_00",
+  "flight_date": "2018-07-03",
+  "flight": "18_57_00",
+  "class": "Global Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-08-31-09.01/2016-02-11/19_55_58",
+  "flight_date": "2016-02-11",
+  "flight": "19_55_58",
+  "class": "Normal",
+  "has_gps": true
+ },
+ {
+  "key": "2018-09-03/2018-09-03/13_52_01",
+  "flight_date": "2018-09-03",
+  "flight": "13_52_01",
+  "class": "Normal",
+  "has_gps": true
+ },
+ {
+  "key": "2018-09-03/2018-09-03/13_56_47",
+  "flight_date": "2018-09-03",
+  "flight": "13_56_47",
+  "class": "Normal",
+  "has_gps": true
+ },
+ {
+  "key": "2018-09-14/07_36_08",
+  "flight_date": "2018-09-14",
+  "flight": "07_36_08",
+  "class": "Normal",
+  "has_gps": true
+ },
+ {
+  "key": "2018-09-07/13_20_12",
+  "flight_date": "2018-09-07",
+  "flight": "13_20_12",
+  "class": "External Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-08-31-09.01/2016-02-11/19_33_10",
+  "flight_date": "2016-02-11",
+  "flight": "19_33_10",
+  "class": "External Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-09-07/12_59_34",
+  "flight_date": "2018-09-07",
+  "flight": "12_59_34",
+  "class": "External Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-09-03/2018-09-03/13_17_32",
+  "flight_date": "2018-09-03",
+  "flight": "13_17_32",
+  "class": "External Position",
+  "has_gps": true
+ },
+ {
+  "key": "2019-01-18/08_16_34",
+  "flight_date": "2019-01-18",
+  "flight": "08_16_34",
+  "class": "External Position",
+  "has_gps": true
+ },
+ {
+  "key": "2018-11-20/15_29_13",
+  "flight_date": "2018-11-20",
+  "flight": "15_29_13",
+  "class": "Mechanical",
+  "has_gps": true
+ },
+ {
+  "key": "2018-11-20/15_25_52",
+  "flight_date": "2018-11-20",
+  "flight": "15_25_52",
+  "class": "Mechanical",
+  "has_gps": true
+ },
+ {
+  "key": "2018-11-20/15_16_18",
+  "flight_date": "2018-11-20",
+  "flight": "15_16_18",
+  "class": "Mechanical",
+  "has_gps": true
+ },
+ {
+  "key": "2019-02-22/08_17_10",
+  "flight_date": "2019-02-22",
+  "flight": "08_17_10",
+  "class": "Normal",
+  "has_gps": false
+ },
+ {
+  "key": "2023-08/2022-09-10/11_05_04",
+  "flight_date": "2022-09-10",
+  "flight": "11_05_04",
+  "class": "Normal",
+  "has_gps": false
+ },
+ {
+  "key": "2019-01-08/07_56_17",
+  "flight_date": "2019-01-08",
+  "flight": "07_56_17",
+  "class": "Normal",
+  "has_gps": false
+ },
+ {
+  "key": "2018-05-26/16_50_55",
+  "flight_date": "2018-05-26",
+  "flight": "16_50_55",
+  "class": "Normal",
+  "has_gps": false
+ },
+ {
+  "key": "2018-10-02/08_00_39",
+  "flight_date": "2018-10-02",
+  "flight": "08_00_39",
+  "class": "Normal",
+  "has_gps": false
+ },
+ {
+  "key": "2019-05-24/19_13_59",
+  "flight_date": "2019-05-24",
+  "flight": "19_13_59",
+  "class": "Normal",
+  "has_gps": false
+ },
+ {
+  "key": "2018-09-15/18_21_12",
+  "flight_date": "2018-09-15",
+  "flight": "18_21_12",
+  "class": "External Position",
+  "has_gps": false
+ },
+ {
+  "key": "2018-09-10/08_02_49",
+  "flight_date": "2018-09-10",
+  "flight": "08_02_49",
+  "class": "External Position",
+  "has_gps": false
+ },
+ {
+  "key": "2018-09-08/18_07_55",
+  "flight_date": "2018-09-08",
+  "flight": "18_07_55",
+  "class": "External Position",
+  "has_gps": false
+ },
+ {
+  "key": "2018-07-09/19_44_18",
+  "flight_date": "2018-07-09",
+  "flight": "19_44_18",
+  "class": "External Position",
+  "has_gps": false
+ },
+ {
+  "key": "2018-09-07/14_10_59",
+  "flight_date": "2018-09-07",
+  "flight": "14_10_59",
+  "class": "External Position",
+  "has_gps": false
+ },
+ {
+  "key": "2021-10-06--/12_14_56",
+  "flight_date": "2021-10-06--",
+  "flight": "12_14_56",
+  "class": "External Position",
+  "has_gps": false
+ },
+ {
+  "key": "2019-03-04/08_36_56",
+  "flight_date": "2019-03-04",
+  "flight": "08_36_56",
+  "class": "Altitude",
+  "has_gps": false
+ },
+ {
+  "key": "2018-09-25/07_34_04",
+  "flight_date": "2018-09-25",
+  "flight": "07_34_04",
+  "class": "Altitude",
+  "has_gps": false
+ },
+ {
+  "key": "2018-09-19/15_58_27",
+  "flight_date": "2018-09-19",
+  "flight": "15_58_27",
+  "class": "Altitude",
+  "has_gps": false
+ },
+ {
+  "key": "2021-10-06--/11_54_32",
+  "flight_date": "2021-10-06--",
+  "flight": "11_54_32",
+  "class": "Altitude",
+  "has_gps": false
+ },
+ {
+  "key": "2018-09-21/19_36_27",
+  "flight_date": "2018-09-21",
+  "flight": "19_36_27",
+  "class": "Altitude",
+  "has_gps": false
+ },
+ {
+  "key": "2018-10-01/08_08_19",
+  "flight_date": "2018-10-01",
+  "flight": "08_08_19",
+  "class": "Altitude",
+  "has_gps": false
+ },
+ {
+  "key": "2019-03-15/11_05_20",
+  "flight_date": "2019-03-15",
+  "flight": "11_05_20",
+  "class": "Altitude",
+  "has_gps": false
+ },
+ {
+  "key": "2019-05-21/07_40_35",
+  "flight_date": "2019-05-21",
+  "flight": "07_40_35",
+  "class": "Altitude",
+  "has_gps": false
+ },
+ {
+  "key": "2018-12-26/09_24_37",
+  "flight_date": "2018-12-26",
+  "flight": "09_24_37",
+  "class": "Mechanical",
+  "has_gps": false
+ },
+ {
+  "key": "2018-12-04/08_01_22",
+  "flight_date": "2018-12-04",
+  "flight": "08_01_22",
+  "class": "Mechanical",
+  "has_gps": false
+ },
+ {
+  "key": "2019-02-26/08_17_55",
+  "flight_date": "2019-02-26",
+  "flight": "08_17_55",
+  "class": "Mechanical",
+  "has_gps": false
+ },
+ {
+  "key": "2018-12-10/08_56_21",
+  "flight_date": "2018-12-10",
+  "flight": "08_56_21",
+  "class": "Mechanical",
+  "has_gps": false
+ },
+ {
+  "key": "2019-01-15/07_40_31",
+  "flight_date": "2019-01-15",
+  "flight": "07_40_31",
+  "class": "Mechanical",
+  "has_gps": false
+ },
+ {
+  "key": "2019-03-22/07_46_23",
+  "flight_date": "2019-03-22",
+  "flight": "07_46_23",
+  "class": "Mechanical",
+  "has_gps": false
+ }
+]

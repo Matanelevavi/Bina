@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.egg-info/
+# never commit credentials or raw data
+.env
+*.pem
+credentials*
+*.csv
+*.ulg
+*.parquet
