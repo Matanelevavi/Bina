@@ -21,8 +21,17 @@ _PREFIX = re.compile(r"^\d{2}_\d{2}_\d{2}$")
 _DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
+# Short aliases used in the Athena queries that were actually run; the parser below relies on them.
+ALIASES = {
+    "discharged_mah": "mah",
+    "gyro_rad[0]": "gx", "gyro_rad[1]": "gy", "gyro_rad[2]": "gz",
+    "accelerometer_m_s2[0]": "ax", "accelerometer_m_s2[1]": "ay", "accelerometer_m_s2[2]": "az",
+    "baro_alt_meter": "alt", "baro_temp_celcius": "btemp",
+}
+
+
 def _alias(col: str) -> str:
-    return re.sub(r"[^0-9a-zA-Z]+", "_", col).strip("_")
+    return ALIASES.get(col) or re.sub(r"[^0-9a-zA-Z]+", "_", col).strip("_")
 
 
 def _check(flights: Sequence[Flight]) -> None:
@@ -55,3 +64,31 @@ def per_flight_summary_sql(table: str, signals: Sequence[str], flights: Sequence
         + f"\nFROM bina_db.{table}\nWHERE flight_date IN ({dates})\n  AND (\n      {cond}\n  )\n"
         "GROUP BY flight_date, flight_id\nORDER BY flight_date, flight_id;"
     )
+
+
+def _num(x):
+    if x is None or str(x).strip() == "":
+        return None
+    return float(x)
+
+
+def summaries_from_row(row, signals: Sequence[str]) -> dict[str, dict]:
+    """Turn one Athena result row (dict of strings, as in the CSV export) into per-signal summaries.
+
+    A signal with zero non-null values gets None statistics. ``n_missing`` is n_rows minus the non-null count.
+    """
+    n_rows = int(row["n_rows"])
+    out = {}
+    for s in signals:
+        a = _alias(s)
+        n = int(row[f"{a}_n"])
+        valid = n > 0
+        out[s] = {
+            "n_total": n_rows,
+            "n_missing": n_rows - n,
+            "min": _num(row[f"{a}_min"]) if valid else None,
+            "max": _num(row[f"{a}_max"]) if valid else None,
+            "mean": _num(row[f"{a}_avg"]) if valid else None,
+            "std": _num(row[f"{a}_std"]) if valid else None,
+        }
+    return out

@@ -47,6 +47,13 @@ def summarize_flight(rows: Mapping[str, Sequence[float | None]]) -> dict[str, di
     return out
 
 
+def mark_not_reported(summary: dict[str, dict]) -> dict[str, dict]:
+    """Set the ``not_reported`` flag on summaries that came from somewhere other than ``summarize_flight``."""
+    for name, d in summary.items():
+        d["not_reported"] = name in ZERO_MEANS_NOT_REPORTED and d["min"] == 0 and d["max"] == 0
+    return summary
+
+
 def _fmt(x: float | None) -> str:
     return "n/a" if x is None else f"{x:.4g}"
 
@@ -54,8 +61,7 @@ def _fmt(x: float | None) -> str:
 def build_prompt(summary: Mapping[str, dict], labels: Sequence[str]) -> str:
     """Build the classification prompt from a flight summary. Contains no identifiers."""
     lines = []
-    for s in SIGNALS:
-        d = summary[s]
+    for s, d in summary.items():
         if d.get("not_reported"):
             lines.append(f"- {s}: n/a (not reported)")
         elif d["min"] is None:
