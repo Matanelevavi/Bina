@@ -58,3 +58,9 @@ def test_real_temperature_kept():
 
 def test_delta_not_a_signal():
     assert "max_cell_voltage_delta" not in SIGNALS
+
+
+def test_source_description_in_prompt():
+    summ = summarize_flight(_rows())
+    assert "(battery telemetry)" in build_prompt(summ, LABELS)
+    assert "(battery and motion-sensor telemetry)" in build_prompt(summ, LABELS, "battery and motion-sensor telemetry")

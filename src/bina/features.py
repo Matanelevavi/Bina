@@ -58,7 +58,7 @@ def _fmt(x: float | None) -> str:
     return "n/a" if x is None else f"{x:.4g}"
 
 
-def build_prompt(summary: Mapping[str, dict], labels: Sequence[str]) -> str:
+def build_prompt(summary: Mapping[str, dict], labels: Sequence[str], source: str = "battery telemetry") -> str:
     """Build the classification prompt from a flight summary. Contains no identifiers."""
     lines = []
     for s, d in summary.items():
@@ -72,7 +72,7 @@ def build_prompt(summary: Mapping[str, dict], labels: Sequence[str]) -> str:
                          f"mean={_fmt(d['mean'])}, std={_fmt(d['std'])}{gap}")
     label_list = ", ".join(labels)
     return (
-        "You are given summary statistics of one UAV flight (battery telemetry).\n"
+        f"You are given summary statistics of one UAV flight ({source}).\n"
         "Classify the flight into exactly one of these classes: " + label_list + ".\n"
         "Some signals may be unavailable (n/a). Do not assume a missing signal means a normal value.\n\n"
         "Statistics:\n" + "\n".join(lines) + "\n\n"
