@@ -1,0 +1,5 @@
+[
+ {"key": "2019-03-19/07_31_26", "flight_date": "2019-03-19", "flight": "07_31_26", "class": "Normal", "has_gps": false},
+ {"key": "2018-09-18/08_51_40", "flight_date": "2018-09-18", "flight": "08_51_40", "class": "Altitude", "has_gps": false},
+ {"key": "2019-01-25/16_45_32", "flight_date": "2019-01-25", "flight": "16_45_32", "class": "Global Position", "has_gps": true}
+]

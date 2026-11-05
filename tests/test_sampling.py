@@ -37,3 +37,12 @@ def test_gps_leakage_visible_in_sample():
     leak = gps_leakage(SAMPLE)
     assert leak["Global Position"] == (12, 12)   # always GPS
     assert leak["Altitude"] == (0, 8)            # never GPS
+
+
+def test_calibration_flights_disjoint_from_sample():
+    cal = json.loads((Path(__file__).parent.parent / "data" / "calibration.json").read_text())
+    sample_keys = {f["key"] for f in SAMPLE}
+    sample_dates = {f["flight_date"] for f in SAMPLE}
+    assert len(cal) == 3
+    assert not {f["key"] for f in cal} & sample_keys
+    assert not {f["flight_date"] for f in cal} & sample_dates
