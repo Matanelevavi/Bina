@@ -10,7 +10,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}-{0,2}$")  # raw folders like "2021-10-06--" exist
 _FILE = re.compile(r"^(?P<flight>.+?)_(?P<topic>battery_status|actuator_outputs|sensor_combined)_\d+\.csv$")
 
 

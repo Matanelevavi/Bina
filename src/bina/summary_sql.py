@@ -18,7 +18,7 @@ SENSOR_SIGNALS = ("gyro_rad[0]", "gyro_rad[1]", "gyro_rad[2]",
                   "baro_alt_meter", "baro_temp_celcius")
 
 _PREFIX = re.compile(r"^\d{2}_\d{2}_\d{2}$")
-_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}-{0,2}$")  # raw folders like "2021-10-06--" exist
 
 
 # Short aliases used in the Athena queries that were actually run; the parser below relies on them.
@@ -64,6 +64,7 @@ def per_flight_summary_sql(table: str, signals: Sequence[str], flights: Sequence
         "SELECT flight_date,\n       flight_id,\n       COUNT(*) AS n_rows,\n"
         + ",\n".join(parts)
         + f"\nFROM bina_db.{table}\nWHERE flight_date IN ({dates})\n  AND (\n      {cond}\n  )\n"
+        f"  AND ends_with(flight_id, '_{instance}')\n"
         "GROUP BY flight_date, flight_id\nORDER BY flight_date, flight_id;"
     )
 

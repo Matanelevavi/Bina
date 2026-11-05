@@ -25,3 +25,8 @@ def test_flight_id():
     assert flight_id_from_filename("08_01_09_battery_status_0.csv") == "08_01_09_battery_status_0"
     with pytest.raises(ValueError):
         flight_id_from_filename("x.txt")
+
+
+def test_date_folder_with_trailing_dashes_is_still_a_date():
+    k = parse_raw_key("2021-10-06--/12_14_56_battery_status_0.csv")
+    assert k.flight_date == "2021-10-06--" and k.matched_by_glob

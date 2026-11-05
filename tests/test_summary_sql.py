@@ -58,3 +58,8 @@ def test_instance_filter_present():
     sql = per_flight_summary_sql("battery_status", BATTERY_SIGNALS, FL)
     assert "AND ends_with(flight_id, '_0')" in sql
     assert "ends_with(flight_id, '_1')" in per_flight_summary_sql("battery_status", BATTERY_SIGNALS, FL, instance="1")
+
+
+def test_date_with_trailing_dashes_accepted():
+    sql = per_flight_summary_sql("battery_status", BATTERY_SIGNALS, [("2021-10-06--", "12_14_56")])
+    assert "flight_date = '2021-10-06--'" in sql
