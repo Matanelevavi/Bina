@@ -21,6 +21,21 @@ All four finished SUCCEEDED. Job-to-duration mapping follows the order in which 
 | bina-sensor-combined-etl | 542 s | 151 |
 | bina-vehicle-gps-position-etl | 107 s | 23 |
 
+## Column types: string to numeric (5.11.2026)
+`spark.read.csv(header=True)` without a schema reads every column as `string`, so most curated columns were text.
+The jobs now cast numeric columns before writing Parquet. Checked with a before/after query on the same table.
+
+| Table | Rows before / after | Non-null counts | Data scanned before / after |
+|---|---|---|---|
+| actuator_outputs | 15,319,361 / 15,319,361 | `output[0]`, `output[7]`, `timestamp` unchanged | 107.36 MB / 85.18 MB |
+| battery_status | 343,137 / 343,137 | 5 cast columns unchanged (`max_cell_voltage_delta` 331,396) | 7.41 MB / 7.47 MB |
+
+Reading: no values were lost in the columns that were checked, and the scan size did **not** change consistently
+(-21% on one table, +0.8% on the other). The benefit of the cast is correct types and simpler queries, not a guaranteed
+cost saving. Limits: one run each, only some columns were checked, and a cast of a bad string yields `NULL`
+(a `NaN` would not show up in a `COUNT`). `sensor_combined` is baselined (37,928,479 rows, barometer present in
+1,448,678 rows) and its job re-run is still being verified.
+
 ## Cost (credits, as of 3.11.2026)
 About $5.96 used, $175.01 remaining. Largest items: KMS $2.60, Glue $1.53, S3 $0.85. KMS keys bill monthly per key
 whether or not they are used.
