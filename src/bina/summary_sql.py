@@ -12,7 +12,7 @@ from typing import Sequence
 Flight = tuple[str, str]
 
 BATTERY_SIGNALS = ("voltage_v", "current_a", "scale", "remaining",
-                   "temperature", "max_cell_voltage_delta", "discharged_mah")
+                   "temperature", "discharged_mah")
 SENSOR_SIGNALS = ("gyro_rad[0]", "gyro_rad[1]", "gyro_rad[2]",
                   "accelerometer_m_s2[0]", "accelerometer_m_s2[1]", "accelerometer_m_s2[2]",
                   "baro_alt_meter", "baro_temp_celcius")

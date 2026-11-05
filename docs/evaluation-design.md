@@ -29,8 +29,17 @@ and do not put identifiers (`flight_date`, `flight_id`, ranges) into the prompt.
 Per-class precision, recall, F1, support and the confusion matrix (`src/bina/metrics.py`). With 50 flights the per-class
 numbers are small-sample estimates, report them with their counts.
 
+## Findings that changed the prompt input (5.11.2026)
+Per-flight check over all 1,234 (flight_date, flight_id) pairs in `battery_status`:
+`temperature` is constant 0 in 989 flights (80%) and `max_cell_voltage_delta` in 1,188 (96%); none is all-NULL.
+So "no data" is encoded as 0. Decision: drop `max_cell_voltage_delta`, and write a constant-0 `temperature` as
+`n/a (not reported)`. Assumption (not verified at the source): a constant 0 for a whole flight means not reported.
+Open risk: if temperature is only reported in some periods or hardware, its presence could leak the class
+like GPS does; to be checked per group once results exist.
+Also: `flight_id` alone is not unique (1,204 distinct ids vs 1,234 date/id pairs), so joins must use `flight_date` too.
+
 ## Prompt input (`src/bina/features.py`)
-Each flight is reduced to min/max/mean/std for 7 battery signals. Measured on the 50-flight sample (Athena):
+Each flight is reduced to min/max/mean/std for 6 battery signals (7 before `max_cell_voltage_delta` was dropped). Measured on the 50-flight sample (Athena):
 `scale`, `remaining`, `discharged_mah` exist in 50/50 flights, `temperature` in 47/50, `max_cell_voltage_delta` in 48/50.
 Rows per flight range 52 to 1,029 and duration 25.6 to 515 s, so raw rows are not sent.
 Missing signals are written as `n/a (no data)` (never 0), partial gaps are reported as a count, and `flight_date`,

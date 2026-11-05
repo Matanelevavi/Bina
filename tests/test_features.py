@@ -39,3 +39,22 @@ def test_prompt_marks_no_data_and_partial_gaps():
 def test_prompt_has_no_identifiers():
     p = build_prompt(summarize_flight(_rows()), LABELS)
     assert "flight_date" not in p and "flight_id" not in p
+
+
+def test_constant_zero_temperature_is_not_reported():
+    p = build_prompt(summarize_flight(_rows(temperature=[0.0, 0.0, 0.0])), LABELS)
+    assert "temperature: n/a (not reported)" in p
+
+
+def test_zero_rule_only_for_listed_signals():
+    p = build_prompt(summarize_flight(_rows(current_a=[0.0, 0.0])), LABELS)
+    assert "current_a: min=0, max=0" in p
+
+
+def test_real_temperature_kept():
+    p = build_prompt(summarize_flight(_rows(temperature=[0.0, 25.0])), LABELS)
+    assert "temperature: min=0, max=25" in p
+
+
+def test_delta_not_a_signal():
+    assert "max_cell_voltage_delta" not in SIGNALS

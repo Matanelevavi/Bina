@@ -3,7 +3,8 @@
 Design decisions (see docs/evaluation-design.md):
 - Raw rows are never sent: flights range from 52 to 1,029 rows, so each signal is reduced to min/max/mean/std.
 - Statistics use only non-missing values. The number of missing values is kept, so partial gaps stay visible.
-- A signal with no valid values is written as ``n/a (no data)``, never as 0.
+- A signal with no valid values is written as ``n/a (no data)``, never as 0. A signal that is constant 0 and
+  listed in ``ZERO_MEANS_NOT_REPORTED`` is written as ``n/a (not reported)``.
 - Identifiers (flight_date, flight_id) and time ranges are never put in the prompt, to avoid leakage.
 """
 from __future__ import annotations
@@ -13,8 +14,12 @@ from typing import Mapping, Sequence
 
 SIGNALS = (
     "voltage_v", "current_a", "scale", "remaining",
-    "temperature", "max_cell_voltage_delta", "discharged_mah",
+    "temperature", "discharged_mah",
 )
+# max_cell_voltage_delta is excluded on purpose: it is constant 0 in 1,188 of 1,234 flights (96%).
+# For these signals a constant 0 over a whole flight means "not reported", not a measurement
+# (temperature: constant 0 in 989 of 1,234 flights). This is an assumption, not verified at the source.
+ZERO_MEANS_NOT_REPORTED = frozenset({"temperature"})
 
 
 def summarize_signal(values: Sequence[float | None]) -> dict:
@@ -34,7 +39,12 @@ def summarize_flight(rows: Mapping[str, Sequence[float | None]]) -> dict[str, di
     missing = [s for s in SIGNALS if s not in rows]
     if missing:
         raise KeyError(f"missing signals: {missing}")
-    return {s: summarize_signal(rows[s]) for s in SIGNALS}
+    out = {}
+    for s in SIGNALS:
+        d = summarize_signal(rows[s])
+        d["not_reported"] = s in ZERO_MEANS_NOT_REPORTED and d["min"] == 0 and d["max"] == 0
+        out[s] = d
+    return out
 
 
 def _fmt(x: float | None) -> str:
@@ -46,7 +56,9 @@ def build_prompt(summary: Mapping[str, dict], labels: Sequence[str]) -> str:
     lines = []
     for s in SIGNALS:
         d = summary[s]
-        if d["min"] is None:
+        if d.get("not_reported"):
+            lines.append(f"- {s}: n/a (not reported)")
+        elif d["min"] is None:
             lines.append(f"- {s}: n/a (no data)")
         else:
             gap = f", {d['n_missing']} of {d['n_total']} values missing" if d["n_missing"] else ""
