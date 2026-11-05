@@ -44,3 +44,9 @@ def test_unknown_label_rejected():
 def test_truncated_output_rejected():
     with pytest.raises(ValueError):
         classify(FakeClient('```json\n{"class": "Nor'), "p", LABELS)
+
+
+def test_explanation_returned():
+    c = FakeClient('```json\n{"class": "Normal", "explanation": "stable voltage"}\n```')
+    assert classify(c, "p", LABELS)["explanation"] == "stable voltage"
+    assert c.kwargs["inferenceConfig"]["maxTokens"] == 200

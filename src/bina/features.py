@@ -76,5 +76,6 @@ def build_prompt(summary: Mapping[str, dict], labels: Sequence[str], source: str
         "Classify the flight into exactly one of these classes: " + label_list + ".\n"
         "Some signals may be unavailable (n/a). Do not assume a missing signal means a normal value.\n\n"
         "Statistics:\n" + "\n".join(lines) + "\n\n"
-        'Answer with JSON only: {"class": "<one of the classes>"}'
+        'Answer with a single JSON object and nothing outside it: '
+        '{"class": "<one of the classes>", "explanation": "<one sentence citing the signals you relied on>"}'
     )

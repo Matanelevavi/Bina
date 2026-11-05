@@ -24,8 +24,8 @@ def extract_json(text: str) -> dict[str, Any]:
 
 
 def classify(client, prompt: str, labels: Sequence[str], model_id: str = DEFAULT_MODEL_ID,
-             max_tokens: int = 100) -> dict[str, Any]:
-    """Send one prompt and return {'class', 'raw', 'input_tokens', 'output_tokens', 'latency_ms'}.
+             max_tokens: int = 200) -> dict[str, Any]:
+    """Send one prompt and return {'class', 'explanation', 'raw', 'input_tokens', 'output_tokens', 'latency_ms'}.
 
     Raises ValueError if the answer is not parseable or names a class outside ``labels``;
     the caller decides whether to record the failure and continue.
@@ -36,11 +36,13 @@ def classify(client, prompt: str, labels: Sequence[str], model_id: str = DEFAULT
         inferenceConfig={"maxTokens": max_tokens, "temperature": 0},
     )
     raw = resp["output"]["message"]["content"][0]["text"]
-    cls = extract_json(raw).get("class")
+    obj = extract_json(raw)
+    cls = obj.get("class")
     if cls not in labels:
         raise ValueError(f"class {cls!r} not in labels; raw={raw[:80]!r}")
     return {
         "class": cls,
+        "explanation": obj.get("explanation"),
         "raw": raw,
         "input_tokens": resp["usage"]["inputTokens"],
         "output_tokens": resp["usage"]["outputTokens"],

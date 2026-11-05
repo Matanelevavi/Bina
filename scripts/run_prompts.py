@@ -15,13 +15,13 @@ MODEL_ID = "global.anthropic.claude-haiku-4-5-20251001-v1:0"
 LABELS = ["Normal", "Altitude", "External Position", "Global Position", "Mechanical"]
 
 
-def extract_class(text):
+def extract_obj(text):
     m = re.search(r"```(?:json)?\s*(.*?)\s*```", text, re.DOTALL)
     body = m.group(1) if m else text
     obj = json.loads(body[body.find("{"): body.rfind("}") + 1])
     if obj.get("class") not in LABELS:
         raise ValueError(f"unknown class: {obj.get('class')!r}")
-    return obj["class"]
+    return obj
 
 
 def main(prompts_path, out_path):
@@ -33,12 +33,13 @@ def main(prompts_path, out_path):
             r = client.converse(
                 modelId=MODEL_ID,
                 messages=[{"role": "user", "content": [{"text": item["prompt"]}]}],
-                inferenceConfig={"maxTokens": 100, "temperature": 0},
+                inferenceConfig={"maxTokens": 200, "temperature": 0},
             )
             raw = r["output"]["message"]["content"][0]["text"]
             rec.update(raw=raw, input_tokens=r["usage"]["inputTokens"],
                        output_tokens=r["usage"]["outputTokens"], latency_ms=r["metrics"]["latencyMs"])
-            rec["predicted"] = extract_class(raw)
+            obj = extract_obj(raw)
+            rec["predicted"], rec["explanation"] = obj["class"], obj.get("explanation")
         except Exception as e:  # record and continue
             rec["error"] = f"{type(e).__name__}: {e}"
         results.append(rec)
