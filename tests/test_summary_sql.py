@@ -52,3 +52,9 @@ def test_prompt_from_parsed_row():
     p = build_prompt(s, ["Normal", "Altitude"])
     assert "- gyro_rad[0]: min=-1.5, max=2" in p
     assert "- baro_alt_meter: n/a (no data)" in p
+
+
+def test_instance_filter_present():
+    sql = per_flight_summary_sql("battery_status", BATTERY_SIGNALS, FL)
+    assert "AND ends_with(flight_id, '_0')" in sql
+    assert "ends_with(flight_id, '_1')" in per_flight_summary_sql("battery_status", BATTERY_SIGNALS, FL, instance="1")

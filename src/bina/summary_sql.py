@@ -42,7 +42,9 @@ def _check(flights: Sequence[Flight]) -> None:
             raise ValueError(f"bad flight reference: {(d, p)!r}")
 
 
-def per_flight_summary_sql(table: str, signals: Sequence[str], flights: Sequence[Flight]) -> str:
+def per_flight_summary_sql(table: str, signals: Sequence[str], flights: Sequence[Flight], instance: str = "0") -> str:
+    """Per-flight summary SQL. Only files of the given instance (suffix ``_<instance>``) are used, so a flight
+    with two instance files (``_0`` and ``_1``) cannot produce two rows."""
     _check(flights)
     parts = []
     for s in signals:

@@ -19,11 +19,18 @@ SENSOR_B = ("gyro_rad[0]", "gyro_rad[1]", "gyro_rad[2]",
 
 
 def _index(path):
+    idx = {}
     with open(path, newline="") as fh:
-        return {(r["flight_date"], r["flight_id"][:8]): r for r in csv.DictReader(fh)}
+        for r in csv.DictReader(fh):
+            k = (r["flight_date"], r["flight_id"][:8])
+            if k in idx:
+                raise ValueError(f"duplicate rows for flight {k} in {path}")
+            idx[k] = r
+    return idx
 
 
 def main(battery_csv, sensor_csv, out_path, flights_path="data/calibration.json"):
+    # flights_path may also be data/sample.json (same record format)
     bat, sen = _index(battery_csv), _index(sensor_csv)
     out = []
     for f in json.load(open(flights_path)):
