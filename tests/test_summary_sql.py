@@ -56,8 +56,8 @@ def test_prompt_from_parsed_row():
 
 def test_instance_filter_present():
     sql = per_flight_summary_sql("battery_status", BATTERY_SIGNALS, FL)
-    assert "AND ends_with(flight_id, '_0')" in sql
-    assert "ends_with(flight_id, '_1')" in per_flight_summary_sql("battery_status", BATTERY_SIGNALS, FL, instance="1")
+    assert "AND regexp_like(flight_id, '_0$')" in sql
+    assert "regexp_like(flight_id, '_1$')" in per_flight_summary_sql("battery_status", BATTERY_SIGNALS, FL, instance="1")
 
 
 def test_date_with_trailing_dashes_accepted():

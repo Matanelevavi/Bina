@@ -64,7 +64,7 @@ def per_flight_summary_sql(table: str, signals: Sequence[str], flights: Sequence
         "SELECT flight_date,\n       flight_id,\n       COUNT(*) AS n_rows,\n"
         + ",\n".join(parts)
         + f"\nFROM bina_db.{table}\nWHERE flight_date IN ({dates})\n  AND (\n      {cond}\n  )\n"
-        f"  AND ends_with(flight_id, '_{instance}')\n"
+        f"  AND regexp_like(flight_id, '_{instance}$')\n"
         "GROUP BY flight_date, flight_id\nORDER BY flight_date, flight_id;"
     )
 
