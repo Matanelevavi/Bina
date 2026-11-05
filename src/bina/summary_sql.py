@@ -75,17 +75,26 @@ def _num(x):
     return float(x)
 
 
+def _is_nan(text) -> bool:
+    """True if an exported cell is the string NaN (any case)."""
+    return text is not None and str(text).strip().lower() == "nan"
+
+
 def summaries_from_row(row, signals: Sequence[str]) -> dict[str, dict]:
     """Turn one Athena result row (dict of strings, as in the CSV export) into per-signal summaries.
 
     A signal with zero non-null values gets None statistics. ``n_missing`` is n_rows minus the non-null count.
+    A signal whose statistics are NaN (the column holds NaN values, which COUNT does not treat as NULL)
+    is treated as having no data at all, so ``n_missing`` equals n_rows.
     """
     n_rows = int(row["n_rows"])
     out = {}
     for s in signals:
         a = _alias(s)
         n = int(row[f"{a}_n"])
-        valid = n > 0
+        valid = n > 0 and not _is_nan(row[f"{a}_avg"])
+        if not valid:
+            n = 0
         out[s] = {
             "n_total": n_rows,
             "n_missing": n_rows - n,

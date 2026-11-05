@@ -63,3 +63,11 @@ def test_instance_filter_present():
 def test_date_with_trailing_dashes_accepted():
     sql = per_flight_summary_sql("battery_status", BATTERY_SIGNALS, [("2021-10-06--", "12_14_56")])
     assert "flight_date = '2021-10-06--'" in sql
+
+
+def test_nan_statistics_are_treated_as_no_data():
+    row = {"n_rows": "10", "voltage_v_n": "10", "voltage_v_min": "NaN", "voltage_v_max": "NaN",
+           "voltage_v_avg": "NaN", "voltage_v_std": "NaN"}
+    out = summaries_from_row(row, ("voltage_v",))["voltage_v"]
+    assert out["min"] is None and out["mean"] is None
+    assert out["n_missing"] == 10
